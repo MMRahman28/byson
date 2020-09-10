@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render RandomPoems with enmpty poems 1`] = `
+<div>
+  <p>
+    No poems
+  </p>
+</div>
+`;
+
+exports[`should render RandomPoems with poems 1`] = `
+<div>
+  <PoemItem
+    createdAt={0}
+    id="1"
+    key="1"
+    note="Morning Poem"
+  />
+  <PoemItem
+    createdAt={-345600000}
+    id="2"
+    key="2"
+    note="Afternoon Poem"
+  />
+  <PoemItem
+    createdAt={345600000}
+    id="3"
+    key="3"
+    note="Evening Poem"
+  />
+  <PoemItem
+    createdAt={604800000}
+    id="4"
+    key="4"
+    note="Night poem"
+  />
+  <PoemItem
+    createdAt={691200000}
+    id="5"
+    key="5"
+    note="Sunset poem"
+  />
+</div>
+`;

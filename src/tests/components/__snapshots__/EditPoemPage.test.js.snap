@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render EditPoemPage correctly 1`] = `
+<div>
+  <PoemForm
+    onSubmit={[Function]}
+    poem={
+      Object {
+        "createdAt": 345600000,
+        "id": "3",
+        "note": "Evening Poem",
+      }
+    }
+  />
+  <button
+    onClick={[Function]}
+  >
+    Remove
+  </button>
+</div>
+`;

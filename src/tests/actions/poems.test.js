@@ -4,6 +4,7 @@ import {
   startAddPoem,
   addPoem,
   editPoem,
+  startEditPoem,
   removePoem,
   startRemovePoem,
   setPoems,
@@ -55,6 +56,24 @@ test('should setup edit poem action object', () => {
     updates:{
       note:'new poem value'
     }
+  });
+});
+
+test('should edit poem from firebase', (done) => {
+  const store = createMockStore({});
+  const id = poems[0].id;
+  const updates = {note: 'An updated poem'};
+  store.dispatch(startEditPoem(id, updates)).then(() => {
+    const actions = store.getActions();
+    expect(actions[0]).toEqual({
+      type: 'EDIT_POEM',
+      id,
+      updates
+    });
+    return database.ref(`poems/${id}`).once('value');
+  }).then((snapshot) => {
+    expect(snapshot.val().note).toBe(updates.note);
+    done();
   });
 });
 

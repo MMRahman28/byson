@@ -53,6 +53,14 @@ export const editPoem = (id, updates) => (
     }
 );
 
+export const startEditPoem = (id, updates) => {
+  return (dispatch) => {
+    return database.ref(`poems/${id}`).update(updates).then(() => {
+      dispatch(editPoem(id, updates));
+    });
+  }
+};
+
 // SET_POEMS
 export const setPoems = (poems) => ({
   type: 'SET_POEMS',

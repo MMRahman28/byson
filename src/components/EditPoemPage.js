@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PoemForm from './PoemForm';
-import { editPoem, startRemovePoem } from '../actions/poems';
+import { startEditPoem, startRemovePoem } from '../actions/poems';
 
 // Refactor EditExpensePage to be a class based Component
 // Setup mapDispatchToProps editExpense and removeExpense
@@ -13,7 +13,7 @@ export class EditPoemPage extends React.Component {
   onSubmit = (poem) => {
     // Dispatch the action to edit the expense
     // Redirect to the dashboard
-    this.props.editPoem(this.props.poem.id, poem);
+    this.props.startEditPoem(this.props.poem.id, poem);
     this.props.history.push('/');
   };
 
@@ -41,7 +41,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-  editPoem: (id, poem) => dispatch(editPoem(id, poem)),
+  startEditPoem: (id, poem) => dispatch(startEditPoem(id, poem)),
   startRemovePoem: (data) => dispatch(startRemovePoem(data))
 });
 

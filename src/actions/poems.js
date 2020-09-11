@@ -35,6 +35,14 @@ export const removePoem = ({id} = {}) => (
 
 );
 
+export const startRemovePoem = ({id} = {}) => {
+  return (dispatch) => {
+    return database.ref(`poems/${id}`).remove().then(() => {
+      dispatch(removePoem( { id }));
+    });
+  };
+};
+
 // EDIT_POEM
 export const editPoem = (id, updates) => (
     {

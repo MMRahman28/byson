@@ -1,6 +1,14 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { startAddPoem, addPoem, editPoem, removePoem, setPoems, startSetPoems } from '../../actions/poems';
+import {
+  startAddPoem,
+  addPoem,
+  editPoem,
+  removePoem,
+  startRemovePoem,
+  setPoems,
+  startSetPoems
+} from '../../actions/poems';
 import poems from '../fixtures/poems';
 import database from '../../firebase/firebase';
 
@@ -21,6 +29,22 @@ test('should setup remove poem action object', () => {
     id: '123abc'
   });
 
+});
+
+test('should remove poem from firebase', (done) => {
+  const store = createMockStore({});
+  const id = poems[2].id;
+  store.dispatch(startRemovePoem({ id })).then(() => {
+    const actions = store.getActions();
+    expect(actions[0]).toEqual({
+      type: 'REMOVE_POEM',
+      id
+    });
+    return database.ref(`poems/${id}`).once('value');
+  }).then((snapshot) => {
+    expect(snapshot.val()).toBeFalsy();
+    done();
+  });
 });
 
 test('should setup edit poem action object', () => {

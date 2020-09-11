@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PoemForm from './PoemForm';
-import { editPoem, removePoem } from '../actions/poems';
+import { editPoem, startRemovePoem } from '../actions/poems';
 
 // Refactor EditExpensePage to be a class based Component
 // Setup mapDispatchToProps editExpense and removeExpense
@@ -19,7 +19,7 @@ export class EditPoemPage extends React.Component {
 
 
   onRemove = () => {
-    this.props.removePoem({id: this.props.poem.id});
+    this.props.startRemovePoem({id: this.props.poem.id});
     this.props.history.push('/');
   };
   render(){
@@ -42,7 +42,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch, props) => ({
   editPoem: (id, poem) => dispatch(editPoem(id, poem)),
-  removePoem: (data) => dispatch(removePoem(data))
+  startRemovePoem: (data) => dispatch(startRemovePoem(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditPoemPage);

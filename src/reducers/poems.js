@@ -22,8 +22,12 @@ export default (state = poemsReducerDefaultState, action) => {
                     return poem;
                 }
             });
-        case 'SET_POEM':
-             return [...state].filter((poem) => (randomPoems.includes(poem.id)));
+
+        case 'SET_POEMS':
+          return action.poems;
+          
+        // case 'SET_POEM':
+        //      return [...state].filter((poem) => (randomPoems.includes(poem.id)));
 
 
         default:

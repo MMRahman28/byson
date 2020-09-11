@@ -1,10 +1,18 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { startAddPoem, addPoem, editPoem, removePoem } from '../../actions/poems';
+import { startAddPoem, addPoem, editPoem, removePoem, setPoems, startSetPoems } from '../../actions/poems';
 import poems from '../fixtures/poems';
 import database from '../../firebase/firebase';
 
 const createMockStore = configureMockStore([thunk]);
+
+beforeEach((done) => {
+  const poemsData = {};
+  poems.forEach(({id, note, createdAt}) => {
+    poemsData[id] = { note, createdAt };
+    });
+    database.ref('poems').set(poemsData).then(() => done());
+});
 
 test('should setup remove poem action object', () => {
   const action = removePoem({id: '123abc'});
@@ -50,7 +58,7 @@ test('should add poem to database and store', (done) => {
          ...poemData
        }
   });
-  
+
   return  database.ref(`poems/${action[0].poem.id}`).once('value');
   }).then((snapshot) => {
     expect(snapshot.val()).toEqual(poemData);
@@ -61,6 +69,7 @@ test('should add poem to database and store', (done) => {
 
 test('should add poem with defaults to database and store', (done) => {
   const store = createMockStore({});
+
   const poemDefaults = {
     note: '',
     createdAt: 0
@@ -77,6 +86,29 @@ test('should add poem with defaults to database and store', (done) => {
   return  database.ref(`poems/${action[0].poem.id}`).once('value');
   }).then((snapshot) => {
     expect(snapshot.val()).toEqual(poemDefaults);
+    done();
+  });
+});
+
+
+test('should setup set poem action object with data', () => {
+  const action = setPoems(poems);
+  expect(action).toEqual({
+    type: 'SET_POEMS',
+    poems
+  });
+});
+
+
+
+test('should fetch the poems from firebase', (done) => {
+  const store = createMockStore({});
+  store.dispatch(startSetPoems()).then(() => {
+    const actions = store.getActions();
+    expect(actions[0]).toEqual({
+      type: 'SET_POEMS',
+      poems
+    });
     done();
   });
 });

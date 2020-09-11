@@ -64,3 +64,12 @@ test('should not edit a poem if poem not found', () => {
   const state = poemsReducer(poems, action);
   expect(state).toEqual(poems);
 });
+
+test('should set poems', () => {
+  const action = {
+    type: 'SET_POEMS',
+    poems: [poems[1]]
+  };
+  const state = poemsReducer(poems, action);
+  expect(state).toEqual([poems[1]]);
+});

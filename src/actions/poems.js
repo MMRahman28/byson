@@ -45,8 +45,30 @@ export const editPoem = (id, updates) => (
     }
 );
 
-// SET_POEM
-export const setPoem = (poems) => ({
-  type: 'SET_POEM',
+// SET_POEMS
+export const setPoems = (poems) => ({
+  type: 'SET_POEMS',
   poems
-});
+})
+
+// Fetch all poem data once
+// Parse that data into an array
+// Dispatch SET_EXPENSES
+
+export const startSetPoems = () => {
+  return (dispatch) => {
+    return database.ref('poems').once('value').then((snapshot) => {
+      const poems = [];
+      snapshot.forEach((childSnapshot) => {
+
+              poems.push({
+                id: childSnapshot.key,
+                ...childSnapshot.val()
+              });
+
+      });
+      dispatch(setPoems(poems));
+    });
+
+  };
+};
